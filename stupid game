@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8"><title>Зомби и Олег</title>
+    <style>
+        body { background: #0d0f12; color: #fff; font-family: sans-serif; text-align: center; padding-top: 50px; }
+        .box { width: 500px; background: #14191f; border: 2px solid #ff3e3e; padding: 20px; margin: 0 auto; border-radius: 8px; }
+        .btn { background: #00ffcc; border: none; padding: 10px 20px; cursor: pointer; font-weight: bold; margin: 10px; }
+    </style>
+</head>
+<body>
+<div class="box">
+    <h2 id="title">Окно квартиры</h2>
+    <p id="visual" style="font-size: 30px;">🏃‍♂️ ── 🧟 🧟</p>
+    <p id="story">Вы смотрите в окно: на улице зомби! Пора бежать.</p>
+    <div id="choices"><button class="btn" onclick="stairs()">Выйти на лестницу</button></div>
+</div>
+
+<script>
+    let kills = 0, time = 5;
+    const txt = document.getElementById('story'), ch = document.getElementById('choices'), 
+          tt = document.getElementById('title'), vs = document.getElementById('visual');
+
+    function stairs() {
+        tt.textContent = "Лестница"; vs.textContent = "🪜 🏃‍♂️";
+        txt.textContent = "Вы спускаетесь по лестнице и выходите на улицу.";
+        ch.innerHTML = `<button class="btn" onclick="loop()">Начать прорыв (5 мин)</button>`;
+    }
+    function loop() {
+        if(time <= 0) return lab();
+        tt.textContent = `Улица (Осталось: ${time} мин)`; vs.textContent = "🏃‍♂️💨 🧟";
+        txt.textContent = `Вы бежите и отбиваетесь от зомби! Всего убито: ${kills}`;
+        ch.innerHTML = `<button class="btn" onclick="kills+=2; time--; loop();">🔫 Стрелять и бежать</button>
+                        <button class="btn" onclick="time--; loop();">🏃‍♂️ Просто бежать</button>`;
+    }
+    function lab() {
+        tt.textContent = "Лаборатория (5 этаж)"; vs.textContent = "🏢 🧪 💻";
+        txt.textContent = "Вы поднялись на 5 этаж, сделали противоядие и залили код на GitHub!";
+        ch.innerHTML = `<button class="btn" onclick="end()">Спустя 2 дня...</button>`;
+    }
+    function end() {
+        tt.textContent = "Финал!"; vs.textContent = "🧔👑🍊";
+        txt.textContent = `Вы заходите на GitHub — там 0 звёзд. Из новостей вы узнаете, что бомж Олег уже 2 дня как всех вылечил своей слюной! Вы бегали зря.`;
+        ch.innerHTML = `<button class="btn" onclick="location.reload()">Заново</button>`;
+    }
+</script>
+</body>
+</html>
